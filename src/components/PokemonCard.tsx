@@ -22,7 +22,7 @@ const PokemonCard = ({ pokemon }: PokemonCardProps) => {
     <>
       <li
         key={pokemon.id}
-        className="shadow-md rounded-md hover:bg-gray-200 transition-all duration-300   list-none p-4 font-bold relative h-[150px] mb-8 flex flex-col lg:justify-between cursor-pointer text-white"
+        className="shadow-md rounded-md hover:bg-gray-200 transition-all duration-300 p-4 font-bold relative h-[150px] mb-8 flex flex-col lg:justify-between cursor-pointer text-white"
         style={{ backgroundColor: bgColor }}
       >
         <Image
