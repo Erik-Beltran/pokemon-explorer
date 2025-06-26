@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
@@ -6,9 +7,10 @@ import { getDominantColor } from "@/utils/getDominantColor";
 
 interface PokemonCardProps {
   pokemon: Pokemon;
+  onSelectPokemon: (pokemon: Pokemon) => void;
 }
 
-const PokemonCard = ({ pokemon }: PokemonCardProps) => {
+const PokemonCard = ({ pokemon, onSelectPokemon }: PokemonCardProps) => {
   const { avatar } = pokemon;
   const [bgColor, setBgColor] = useState<string>("rgb(240, 240, 240)");
 
@@ -24,6 +26,7 @@ const PokemonCard = ({ pokemon }: PokemonCardProps) => {
         key={pokemon.id}
         className="shadow-md rounded-md hover:bg-gray-200 transition-all duration-300 p-4 font-bold relative h-[150px] mb-8 flex flex-col lg:justify-between cursor-pointer text-white"
         style={{ backgroundColor: bgColor }}
+        onClick={() => onSelectPokemon(pokemon)}
       >
         <Image
           src="/pokeball-light.webp"

@@ -7,13 +7,27 @@ import Image from "next/image";
 import { ViewMode } from "./ViewMode";
 import GridView from "./GridView";
 import TypeFilter from "./TypeFilter";
+import PokemonModal from "./PokemonModal";
+import PokemonCardSkeleton from "./PokemonCardSkeleton";
 
 import { getPokemons } from "@/services/api";
-import PokemonCardSkeleton from "./PokemonCardSkeleton";
+import { Pokemon } from "@/types/pokemon";
 
 const HomePageClient = () => {
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
   const [filterType, setFilterType] = useState("all");
+  const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = (pokemon: Pokemon) => {
+    setSelectedPokemon(pokemon);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedPokemon(null);
+  };
 
   const {
     data: allPokemon,
@@ -36,7 +50,7 @@ const HomePageClient = () => {
   }, [allPokemon, filterType]);
 
   return (
-    <div className="lg:max-w-4xl lg:mx-auto w-full pt-10 px-6 md:px-10 flex flex-col  relative  max-md:overflow-hidden ">
+    <div className="lg:max-w-4xl lg:mx-auto w-full pt-10 px-6 md:px-10 flex flex-col  relative">
       <Image
         src="/pokemon_logo.svg"
         width={500}
@@ -68,11 +82,15 @@ const HomePageClient = () => {
       {filteredData && filteredData.length > 0 && (
         <>
           {viewMode === "grid" ? (
-            <GridView data={filteredData} />
+            <GridView data={filteredData} onSelectPokemon={handleOpenModal} />
           ) : (
             <table></table>
           )}
         </>
+      )}
+
+      {isModalOpen && selectedPokemon && (
+        <PokemonModal pokemon={selectedPokemon} onClose={handleCloseModal} />
       )}
     </div>
   );

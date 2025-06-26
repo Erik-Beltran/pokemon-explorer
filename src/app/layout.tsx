@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-gray-500/10`}>
+      <body className={`${inter.className} bg-gray-500/10  overflow-x-hidden`}>
         <ReactQueryProvider>
           <main>{children}</main>
         </ReactQueryProvider>
