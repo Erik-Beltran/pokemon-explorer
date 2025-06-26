@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
+import ReactPaginate from "react-paginate";
 
 import { ViewMode } from "./ViewMode";
 import GridView from "./GridView";
@@ -13,11 +14,14 @@ import PokemonCardSkeleton from "./PokemonCardSkeleton";
 import { getPokemons } from "@/services/api";
 import { Pokemon } from "@/types/pokemon";
 
+const PAGE_SIZE = 15;
+
 const HomePageClient = () => {
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
   const [filterType, setFilterType] = useState("all");
   const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const handleOpenModal = (pokemon: Pokemon) => {
     setSelectedPokemon(pokemon);
@@ -27,6 +31,10 @@ const HomePageClient = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedPokemon(null);
+  };
+
+  const handlePageClick = (event: { selected: number }) => {
+    setCurrentPage(event.selected);
   };
 
   const {
@@ -48,6 +56,19 @@ const HomePageClient = () => {
       pokemon.types.some((t) => t.type.name === filterType)
     );
   }, [allPokemon, filterType]);
+
+  const paginatedData = useMemo(() => {
+    const start = currentPage * PAGE_SIZE;
+    const end = start + PAGE_SIZE;
+
+    return filteredData.slice(start, end);
+  }, [filteredData, currentPage]);
+
+  const totalPages = Math.ceil((filteredData?.length || 0) / PAGE_SIZE);
+
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [filterType]);
 
   return (
     <div className="lg:max-w-4xl lg:mx-auto w-full pt-10 px-6 md:px-10 flex flex-col  relative">
@@ -82,11 +103,26 @@ const HomePageClient = () => {
       {filteredData && filteredData.length > 0 && (
         <>
           {viewMode === "grid" ? (
-            <GridView data={filteredData} onSelectPokemon={handleOpenModal} />
+            <GridView data={paginatedData} onSelectPokemon={handleOpenModal} />
           ) : (
             <table></table>
           )}
         </>
+      )}
+
+      {filteredData.length > PAGE_SIZE && (
+        <ReactPaginate
+          forcePage={currentPage}
+          previousLabel="<"
+          nextLabel=">"
+          pageCount={totalPages}
+          onPageChange={handlePageClick}
+          containerClassName="flex items-center justify-center gap-4 rounded-md p-3 mt-4 flex-wrap"
+          previousClassName="text-white bg-blue-400 hover:bg-red-500 rounded px-3 py-1 text-sm font-medium border border-gray-500/10 cursor-pointer"
+          nextClassName="text-white  bg-blue-400 hover:bg-red-500 rounded px-3 py-1 text-sm font-medium border border-gray-500/10 cursor-pointer"
+          activeClassName="text-blue-600 bg-yellow-500 rounded px-3 py-1 text-sm font-medium border border-gray-500/10 cursor-pointer"
+          pageClassName="text-white bg-blue-400 rounded px-3 py-1 text-sm font-medium border border-gray-500/10 cursor-pointer hover:bg-red-500"
+        />
       )}
 
       {isModalOpen && selectedPokemon && (
