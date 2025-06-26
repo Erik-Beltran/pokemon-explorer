@@ -9,12 +9,18 @@ import GridView from "./GridView";
 import TypeFilter from "./TypeFilter";
 
 import { getPokemons } from "@/services/api";
+import PokemonCardSkeleton from "./PokemonCardSkeleton";
 
 const HomePageClient = () => {
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
   const [filterType, setFilterType] = useState("all");
 
-  const { data: allPokemon } = useQuery({
+  const {
+    data: allPokemon,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
     queryKey: ["pokemon-all"],
     queryFn: () => getPokemons(),
     staleTime: 1000 * 60 * 5,
@@ -52,7 +58,22 @@ const HomePageClient = () => {
         <ViewMode value={viewMode} onChange={setViewMode} />
       </div>
 
-      {viewMode === "grid" ? <GridView data={filteredData} /> : <table></table>}
+      {isLoading && <PokemonCardSkeleton />}
+      {isError && (
+        <p className="text-red-600 text-center py-6">
+          Something went wrong. Please try again {(error as Error).message}
+        </p>
+      )}
+
+      {filteredData && filteredData.length > 0 && (
+        <>
+          {viewMode === "grid" ? (
+            <GridView data={filteredData} />
+          ) : (
+            <table></table>
+          )}
+        </>
+      )}
     </div>
   );
 };
