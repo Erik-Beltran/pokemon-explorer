@@ -2,11 +2,11 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import PokemonCard from "./PokemonCard";
 import { getPokemons } from "@/services/api";
 import Image from "next/image";
 import { useState } from "react";
 import { ViewMode } from "./ViewMode";
+import GridView from "./GridView";
 
 const HomePageClient = () => {
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
@@ -36,11 +36,7 @@ const HomePageClient = () => {
 
       <ViewMode value={viewMode} onChange={setViewMode} />
 
-      <ul className="grid grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
-        {allPokemon?.map((pokemon) => (
-          <PokemonCard key={pokemon.name} pokemon={pokemon}></PokemonCard>
-        ))}
-      </ul>
+      {viewMode === "grid" ? <GridView data={allPokemon} /> : <table></table>}
     </div>
   );
 };
