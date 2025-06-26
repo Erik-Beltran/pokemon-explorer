@@ -6,10 +6,11 @@ import { X } from "lucide-react";
 import StatItem from "./StatItem";
 
 import { Type } from "@/types/apiInterface";
-import { Pokemon, Stat } from "@/types/pokemon";
+import { Pokemon, PokemonType, Stat } from "@/types/pokemon";
 
 import { formatHeight, formatWeight } from "@/utils/formatters";
 import { getDominantColor } from "@/utils/getDominantColor";
+import { getTypeColor } from "@/utils/getTypeColor";
 
 interface PokemonModalProps {
   pokemon: Pokemon;
@@ -71,9 +72,13 @@ const PokemonModal = ({ onClose, pokemon }: PokemonModalProps) => {
             <ul className="flex gap-8 flex-wrap mb-8 w-full">
               {pokemon.types &&
                 pokemon.types.map((type: Type, index: number) => {
+                  const typeBgColor = getTypeColor(
+                    type.type.name as PokemonType
+                  );
+
                   return (
                     <li key={index} className="flex flex-1">
-                      <StatItem value={type.type.name} />
+                      <StatItem value={type.type.name} bgColor={typeBgColor} />
                     </li>
                   );
                 })}
