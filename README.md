@@ -11,6 +11,21 @@
 - **Styling**: TailwindCSS
 - **Language**: TypeScript
 - **Package Manager**: pnpm
+
+ ## 📸 Screenshots
+
+### Table View
+![Table View](./screenshots/table-view.png)
+
+### Grid View
+![Grid View](./screenshots/grid-view.png)
+
+### Details
+![Pokemon Details](./screenshots/details.png)
+
+## 🌐 Live Demo
+
+🔗 [View Deployed App](https://pokemon.erikbeltran.dev/)
   
 ## 🚀 Getting Started
 
