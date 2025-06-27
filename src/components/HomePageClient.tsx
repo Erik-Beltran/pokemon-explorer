@@ -13,11 +13,12 @@ import PokemonCardSkeleton from "./PokemonCardSkeleton";
 
 import { getPokemons } from "@/services/api";
 import { Pokemon } from "@/types/pokemon";
+import { PokemonTable } from "./PokemonTable";
 
 const PAGE_SIZE = 15;
 
 const HomePageClient = () => {
-  const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
+  const [viewMode, setViewMode] = useState<"grid" | "table">("table");
   const [filterType, setFilterType] = useState("all");
   const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -71,7 +72,7 @@ const HomePageClient = () => {
   }, [filterType]);
 
   return (
-    <div className="lg:max-w-4xl lg:mx-auto w-full pt-10 px-6 md:px-10 flex flex-col  relative">
+    <div className="lg:max-w-4xl lg:mx-auto w-full py-10 px-6 md:px-10 flex flex-col  relative">
       <Image
         src="/pokemon_logo.svg"
         width={500}
@@ -105,7 +106,10 @@ const HomePageClient = () => {
           {viewMode === "grid" ? (
             <GridView data={paginatedData} onSelectPokemon={handleOpenModal} />
           ) : (
-            <table></table>
+            <PokemonTable
+              data={paginatedData}
+              onSelectPokemon={handleOpenModal}
+            />
           )}
         </>
       )}

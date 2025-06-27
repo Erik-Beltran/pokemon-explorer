@@ -16,7 +16,9 @@ export const getPokemons = async (): Promise<Pokemon[]> => {
 
     const detailedResults = await Promise.all(
       data.results.map(async (info) => {
-        const res = await axiosInstance.get<PokeAPIPokemon>(info.url);
+        const res = await axiosInstance.get<PokeAPIPokemon>(
+          `/pokemon/${info.name}`
+        );
         return mapPokemonDetail(res.data);
       })
     );
