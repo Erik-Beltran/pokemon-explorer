@@ -52,7 +52,7 @@ const PokemonModal = ({ onClose, pokemon }: PokemonModalProps) => {
         </button>
 
         <div
-          className="relative flex flex-col h-full w-full items-center pt-32 lg:pt-24 rounded-4xl"
+          className="relative flex flex-col h-full w-full items-center pt-32   rounded-4xl"
           style={{ backgroundColor: bgColor }}
         >
           <Image
@@ -60,7 +60,7 @@ const PokemonModal = ({ onClose, pokemon }: PokemonModalProps) => {
             width={200}
             height={200}
             alt={pokemon.name}
-            className="absolute  -top-1/6   flex mx-auto z-20  "
+            className="absolute  -top-1/6   flex mx-auto z-20"
           />
           <p className="text-sm   mb-1 text-white">{"Nº " + pokemon.id}</p>
           <h2 className="text-2xl font-bold capitalize mb-2 text-white">
