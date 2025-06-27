@@ -7,7 +7,7 @@ type TypeFilterProps = {
 
 const TypeFilter = ({ onChange, selectedType }: TypeFilterProps) => {
   return (
-    <div className="mb-8 flex max-md:flex-col gap-2 justify-start lg:items-center max-md:w-full">
+    <div className="flex max-md:flex-col gap-2 justify-start lg:items-center max-md:w-full">
       <label className="mr-2 text-sm font-medium">Type:</label>
       <select
         value={selectedType}

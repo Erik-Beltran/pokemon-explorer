@@ -89,7 +89,7 @@ const HomePageClient = () => {
         className="hidden lg:block absolute  opacity-50   -right-1/2 -top-30"
       />
 
-      <div className="flex flex-col lg:flex-row justify-between items-baseline mb-4">
+      <div className="flex flex-col lg:flex-row justify-between items-baseline mb-8">
         <TypeFilter selectedType={filterType} onChange={setFilterType} />
         <ViewMode value={viewMode} onChange={setViewMode} />
       </div>

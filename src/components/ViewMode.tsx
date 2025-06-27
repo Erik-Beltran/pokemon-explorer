@@ -9,7 +9,7 @@ type ViewModeProps = {
 
 export const ViewMode = ({ onChange, value }: ViewModeProps) => {
   return (
-    <div className="flex lg:items-center gap-2 max-md:flex-col max-md:w-full mb-10">
+    <div className="flex lg:items-center gap-2 max-md:flex-col max-md:w-full">
       <label htmlFor="view-mode" className="text-sm font-medium flex gap-1 ">
         View
         {value === "grid" ? (
